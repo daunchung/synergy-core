@@ -551,12 +551,15 @@ bool XWindowsScreen::getClipboard(ClipboardID id, IClipboard *clipboard) const
 void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32 pos_x, SInt32 pos_y) const
 {
 	Display *display = XOpenDisplay(NULL);
-	Screen *screen = DefaultScreenOfDisplay(display);
-	int monitorCount = ScreenCount(display);
+	int screenNum = DefaultScreen(display);
+	Window rootWindow = RootWindow(display, screenNum);
+	XRRScreenResources *screenResources = XRRGetScreenResources(display, rootWindow);
+	int monitorCount = screenResources->nmonitors;
 	bool found = false;
+
 	for (int i = 0; i < monitorCount; ++i)
 	{
-		XRRMonitorInfo *monitorInfo = XRRGetMonitors(display, screen, True, NULL);
+		XRRCrtcInfo *crtcInfo = XRRGetCrtcInfo(display, screenResources, screenResources->crtcs[i]);
 		std::cout << "Monitor " << i + 1 << ":" << std::endl;
 		std::cout << "  Width: " << monitorInfo[i].width << std::endl;
 		std::cout << "  Height: " << monitorInfo[i].height << std::endl;
@@ -580,7 +583,7 @@ void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32
 		{
 			LOG((CLOG_DEBUG "DAUN - missed display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
 		}
-		XRRFreeMonitors(monitorInfo);
+		XRRFreeCrtcInfo(crtcInfo);
 	}
 	if (!found)
 	{
@@ -589,6 +592,7 @@ void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32
 		w = m_w;
 		h = m_h;
 	}
+	XRRFreeScreenResources(screenResources);
 	XCloseDisplay(display);
 }
 
