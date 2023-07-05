@@ -555,18 +555,18 @@ void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32
 	int screenNum = DefaultScreen(display);
 	Window rootWindow = RootWindow(display, screenNum);
 	XRRScreenResources *screenResources = XRRGetScreenResources(display, rootWindow);
-	int monitorCount = screenResources->nmonitors;
+	int monitorCount = screenResources->ncrtc;
 	bool found = false;
 
 	for (int i = 0; i < monitorCount; ++i)
 	{
 		XRRCrtcInfo *crtcInfo = XRRGetCrtcInfo(display, screenResources, screenResources->crtcs[i]);
-		LOG((CLOG_DEBUG "MONITOR ID: %d, x: %d, y: %d, width: %d, height: %d", i + 1, monitorInfo[i].x, monitorInfo[i].y, monitorInfo[i].width, monitorInfo[i].height));
+		LOG((CLOG_DEBUG "MONITOR ID: %d, x: %d, y: %d, width: %d, height: %d", i + 1, crtcInfo->x, crtcInfo->y, crtcInfo->width, crtcInfo->height));
 		SInt32 min_x, min_y, max_x, max_y;
-		min_x = monitorInfo[i].x;
-		min_y = monitorInfo[i].y;
-		max_x = monitorInfo[i].width;
-		max_y = monitorInfo[i].height;
+		min_x = crtcInfo->x;
+		min_y = crtcInfo->y;
+		max_x = crtcInfo->width;
+		max_y = crtcInfo->height;
 		if (pos_x >= min_x && pos_y >= min_y && pos_x <= max_x && pos_y <= max_y)
 		{
 			LOG((CLOG_DEBUG "DAUN - found display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
