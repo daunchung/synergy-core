@@ -550,7 +550,7 @@ bool XWindowsScreen::getClipboard(ClipboardID id, IClipboard *clipboard) const
 
 void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32 pos_x, SInt32 pos_y) const
 {
-	LOG((CLOG_DEBUG "DAUN - LOOKING FOR display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
+	LOG((CLOG_DEBUG "DAUN - LOOKING FOR display containing position mousePOS(%d, %d)", pos_x, pos_y));
 	Display *display = XOpenDisplay(NULL);
 	Screen *screen = DefaultScreenOfDisplay(display);
 	int monitorCount = ScreenCount(display);
