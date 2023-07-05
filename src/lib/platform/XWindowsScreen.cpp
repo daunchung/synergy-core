@@ -548,6 +548,7 @@ bool XWindowsScreen::getClipboard(ClipboardID id, IClipboard *clipboard) const
 
 void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32 pos_x, SInt32 pos_y) const
 {
+	LOG((CLOG_DEBUG "DAUN - LOOKING FOR display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
 	Display *display = XOpenDisplay(NULL);
 	Screen *screen = DefaultScreenOfDisplay(display);
 	int monitorCount = ScreenCount(display);
@@ -555,11 +556,7 @@ void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32
 	for (int i = 0; i < monitorCount; ++i)
 	{
 		XRRMonitorInfo *monitorInfo = XRRGetMonitors(display, screen, True, NULL);
-		// std::cout << "Monitor " << i + 1 << ":" << std::endl;
-		// std::cout << "  Width: " << monitorInfo[i].width << std::endl;
-		// std::cout << "  Height: " << monitorInfo[i].height << std::endl;
-		// std::cout << "  X: " << monitorInfo[i].x << std::endl;
-		// std::cout << "  Y: " << monitorInfo[i].y << std::endl;
+		LOG((CLOG_DEBUG "MONITOR ID: %d, x: %d, y: %d, width: %d, height: %d", i+1, monitorInfo[i].x, monitorInfo[i].y, monitorInfo[i].width, monitorInfo[i].height));
 		SInt32 min_x, min_y, max_x, max_y;
 		min_x = monitorInfo[i].x;
 		min_y = monitorInfo[i].y;
