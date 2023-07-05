@@ -560,11 +560,11 @@ void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32
 	for (int i = 0; i < monitorCount; ++i)
 	{
 		XRRCrtcInfo *crtcInfo = XRRGetCrtcInfo(display, screenResources, screenResources->crtcs[i]);
-		std::cout << "Monitor " << i + 1 << ":" << std::endl;
-		std::cout << "  Width: " << monitorInfo[i].width << std::endl;
-		std::cout << "  Height: " << monitorInfo[i].height << std::endl;
-		std::cout << "  X: " << monitorInfo[i].x << std::endl;
-		std::cout << "  Y: " << monitorInfo[i].y << std::endl;
+		// std::cout << "Monitor " << i + 1 << ":" << std::endl;
+		// std::cout << "  Width: " << monitorInfo[i].width << std::endl;
+		// std::cout << "  Height: " << monitorInfo[i].height << std::endl;
+		// std::cout << "  X: " << monitorInfo[i].x << std::endl;
+		// std::cout << "  Y: " << monitorInfo[i].y << std::endl;
 		SInt32 min_x, min_y, max_x, max_y;
 		min_x = monitorInfo[i].x;
 		min_y = monitorInfo[i].y;
