@@ -28,6 +28,7 @@
 #include "base/EventTypes.h"
 #include "mt/CondVar.h"
 #include <memory>
+#include <climits>
 
 class EventQueueTimer;
 namespace synergy
