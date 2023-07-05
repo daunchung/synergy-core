@@ -20,6 +20,7 @@
 
 #include "synergy/IClient.h"
 #include "base/String.h"
+#include <climits>
 
 namespace synergy
 {
