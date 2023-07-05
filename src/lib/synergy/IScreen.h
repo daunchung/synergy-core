@@ -22,6 +22,7 @@
 #include "base/Event.h"
 #include "base/EventTypes.h"
 #include "common/IInterface.h"
+#include <climits>
 
 class IClipboard;
 
