@@ -1,0 +1,44 @@
+section: screens
+	windows:
+		alt = alt
+		meta = meta
+		shift = shift
+		super = super
+		ctrl = ctrl
+		halfDuplexNumLock = false
+		xtestIsXineramaUnaware = false
+		halfDuplexCapsLock = false
+		halfDuplexScrollLock = false
+		switchCorners = none 
+		altgr = alt
+	ubuntu:
+		alt = alt
+		meta = meta
+		shift = shift
+		super = super
+		ctrl = ctrl
+		halfDuplexNumLock = false
+		xtestIsXineramaUnaware = false
+		halfDuplexCapsLock = false
+		halfDuplexScrollLock = false
+		switchCorners = none 
+		altgr = alt
+end
+
+section: links
+	windows:
+		down(0,100) = ubuntu(50,100)
+		left(0,100) = ubuntu(0,50)
+	ubuntu:
+		up(0,50) = windows(0,100)
+		right(50,100) = windows(0,100)
+end
+
+section: options
+	heartbeat = 5000
+	relativeMouseMoves = true
+	clipboardSharing = true
+	clipboardSharingSize = 4000
+	win32KeepForeground = true
+	disableLockToScreen = false
+end

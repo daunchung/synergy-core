@@ -574,7 +574,7 @@ void MSWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt3
             max_y = Monitors.rcMonitors[monitorIndex].bottom;
             if (pos_x >= min_x && pos_y >= min_y && pos_x <= max_x && pos_y <= max_y)
             {
-                LOG((CLOG_DEBUG "DAUN - found display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
+                // LOG((CLOG_DEBUG "DAUN - found display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
                 found = true;
                 x = min_x;
                 y = min_y;

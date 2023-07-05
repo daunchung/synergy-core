@@ -25,6 +25,7 @@
 #include "synergy/mouse_types.h"
 #include "synergy/option_types.h"
 #include "base/String.h"
+#include <climits>
 
 class IClipboard;
 class IPlatformScreen;

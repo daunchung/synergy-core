@@ -1523,7 +1523,7 @@ void Server::handleMotionSecondaryEvent(const Event &event, void *)
 		static_cast<IPlatformScreen::MotionInfo *>(event.getData());
 	// TODO: DAUN
 	// There is a bug that when window shape goes weird, this info->m_x or info->m_y returns weird.
-	LOG((CLOG_DEBUG "DAUN - handling motion secondary event (%d,%d)", info->m_x, info->m_y));
+	// LOG((CLOG_DEBUG "DAUN - handling motion secondary event (%d,%d)", info->m_x, info->m_y));
 	onMouseMoveSecondary(info->m_x, info->m_y);
 }
 
@@ -1934,7 +1934,7 @@ void Server::onMouseUp(ButtonID id)
 bool Server::onMouseMovePrimary(SInt32 x, SInt32 y)
 {
 	// LOG((CLOG_DEBUG4 "onMouseMovePrimary %d,%d", x, y));
-	LOG((CLOG_DEBUG "onMouseMovePrimary %d,%d", x, y));
+	// LOG((CLOG_DEBUG "onMouseMovePrimary %d,%d", x, y));
 
 	// mouse move on primary (server's) screen
 	if (m_active != m_primaryClient)
@@ -2362,7 +2362,7 @@ void Server::onMouseMoveSecondary(SInt32 dx, SInt32 dy)
 		// if TOP, BOTTOM, find boundary of the monitor on same X axis
 
 		// switch screens
-		LOG((CLOG_DEBUG "DAUN - onMouseMoveSecondary jump %d,%d", newX, newY));
+		// LOG((CLOG_DEBUG "DAUN - onMouseMoveSecondary jump %d,%d", newX, newY));
 		switchScreen(newScreen, newX, newY, false);
 	}
 	else

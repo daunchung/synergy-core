@@ -25,6 +25,7 @@
 #include "synergy/ISecondaryScreen.h"
 #include "synergy/IKeyState.h"
 #include "synergy/option_types.h"
+#include <climits>
 
 class IClipboard;
 
