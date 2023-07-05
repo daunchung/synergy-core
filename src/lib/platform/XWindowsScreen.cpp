@@ -558,8 +558,37 @@ void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32
 	int monitorCount = screenResources->ncrtc;
 	bool found = false;
 
-	for (int i = 0; i < monitorCount; ++i)
+	if (pos_x > INT_MIN && pos_y > INT_MIN)
+	// based on x and y, return current display's boundary
 	{
+		for (int i = 0; i < monitorCount; ++i)
+		{
+			XRRCrtcInfo *crtcInfo = XRRGetCrtcInfo(display, screenResources, screenResources->crtcs[i]);
+			LOG((CLOG_DEBUG "MONITOR ID: %d, x: %d, y: %d, width: %d, height: %d", i + 1, crtcInfo->x, crtcInfo->y, crtcInfo->width, crtcInfo->height));
+			SInt32 min_x, min_y, max_x, max_y;
+			min_x = crtcInfo->x;
+			min_y = crtcInfo->y;
+			max_x = crtcInfo->width;
+			max_y = crtcInfo->height;
+			if (pos_x >= min_x && pos_y >= min_y && pos_x <= (max_x + min_x) && pos_y <= (max_y + min_y))
+			{
+				// LOG((CLOG_DEBUG "DAUN - found display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
+				found = true;
+				x = min_x;
+				y = min_y;
+				w = max_x + min_x;
+				h = max_y + min_y;
+			}
+			else
+			{
+				// LOG((CLOG_DEBUG "DAUN - missed display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
+			}
+			XRRFreeCrtcInfo(crtcInfo);
+		}
+	}
+	else if (pos_x > INT_MIN)
+	{
+		// get nearest x axis
 		XRRCrtcInfo *crtcInfo = XRRGetCrtcInfo(display, screenResources, screenResources->crtcs[i]);
 		LOG((CLOG_DEBUG "MONITOR ID: %d, x: %d, y: %d, width: %d, height: %d", i + 1, crtcInfo->x, crtcInfo->y, crtcInfo->width, crtcInfo->height));
 		SInt32 min_x, min_y, max_x, max_y;
@@ -567,21 +596,39 @@ void XWindowsScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h, SInt32
 		min_y = crtcInfo->y;
 		max_x = crtcInfo->width;
 		max_y = crtcInfo->height;
-		if (pos_x >= min_x && pos_y >= min_y && pos_x <= max_x && pos_y <= max_y)
+		if (pos_x >= min_x && pos_x <= (max_x + min_x))
 		{
-			LOG((CLOG_DEBUG "DAUN - found display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
+			// LOG((CLOG_DEBUG "DAUN - found display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
 			found = true;
 			x = min_x;
 			y = min_y;
-			w = max_x - min_x;
-			h = max_y - min_y;
-		}
-		else
-		{
-			LOG((CLOG_DEBUG "DAUN - missed display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
+			w = max_x + min_x;
+			h = max_y + min_y;
 		}
 		XRRFreeCrtcInfo(crtcInfo);
 	}
+	else if (pos_y > INT_MIN)
+	{
+		// get nearest y axis
+		XRRCrtcInfo *crtcInfo = XRRGetCrtcInfo(display, screenResources, screenResources->crtcs[i]);
+		LOG((CLOG_DEBUG "MONITOR ID: %d, x: %d, y: %d, width: %d, height: %d", i + 1, crtcInfo->x, crtcInfo->y, crtcInfo->width, crtcInfo->height));
+		SInt32 min_x, min_y, max_x, max_y;
+		min_x = crtcInfo->x;
+		min_y = crtcInfo->y;
+		max_x = crtcInfo->width;
+		max_y = crtcInfo->height;
+		if (pos_y >= min_y && pos_y <= (max_y + min_y))
+		{
+			// LOG((CLOG_DEBUG "DAUN - found display containing position %d, %d, %d, %d, mousePOS(%d, %d)", min_x, min_y, max_x, max_y, pos_x, pos_y));
+			found = true;
+			x = min_x;
+			y = min_y;
+			w = max_x + min_x;
+			h = max_y + min_y;
+		}
+		XRRFreeCrtcInfo(crtcInfo);
+	}
+
 	if (!found)
 	{
 		x = m_x;
