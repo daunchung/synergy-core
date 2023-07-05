@@ -22,6 +22,7 @@
 #include "base/Event.h"
 #include "base/String.h"
 #include "base/EventTypes.h"
+#include <climits>
 
 namespace synergy
 {

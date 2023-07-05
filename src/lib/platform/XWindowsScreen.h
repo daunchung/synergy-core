@@ -32,6 +32,8 @@
 #include <X11/Xlib.h>
 #endif
 
+#include <climits>
+
 class XWindowsClipboard;
 class XWindowsKeyState;
 class XWindowsScreenSaver;

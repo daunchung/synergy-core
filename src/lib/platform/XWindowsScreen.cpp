@@ -78,6 +78,8 @@ extern "C"
 #endif
 #endif
 
+#include <climits>
+
 static int xi_opcode;
 
 //
